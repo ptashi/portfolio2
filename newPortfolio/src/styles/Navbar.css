@@ -1,0 +1,118 @@
+header {
+  display: flex;
+  position: absolute;
+  flex-direction: row;
+  height: 70px;
+  width: 100%;
+  align-items: center; /* makes it the center vertically */
+  justify-content: space-between; /*this pushes the 2 flex items to opp sides of the container */
+
+  z-index: 10;
+}
+
+.navListLeft {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+  padding-left: 20px;
+  color: white;
+}
+
+.navListContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 70px;
+  padding-right: 20px;
+  gap: 20px;
+}
+
+.navListName {
+  font-family: "brush script MT", cursive;
+  font-weight: 300;
+  font-size: 30px;
+}
+
+.navListName:hover {
+  cursor: pointer;
+}
+
+.navListPosition {
+  font-family: fantasy;
+  font-weight: 600;
+  letter-spacing: -3px;
+  font-size: 40px;
+}
+
+.navListItem {
+  text-align: center; /* center horizontally */
+  align-content: center; /* center vertically */
+  height: 30px;
+  border-radius: 10px;
+
+  letter-spacing: 0.15em;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.navListItem a,
+.navListItem a:visited,
+.navListItemDropItem a,
+.navListItemDropItem a:visited,
+.navListLeft a,
+.navListLeft a:visited {
+  padding-left: 10px;
+  padding-right: 10px;
+
+  font-size: 0.9rem;
+  color: white;
+  text-decoration: none;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.navListItem:hover {
+  background-color: rgba(228, 171, 138, 0.15);
+}
+
+.navListItemDrop {
+  display: none;
+  border-radius: 10px;
+  border-top-left-radius: 0;
+}
+
+.navListItem:hover .navListItemDrop {
+  display: block;
+  position: absolute;
+  background-color: rgba(228, 171, 138, 0.15);
+  transform: translateY(4px);
+}
+
+.navListItemDropItem a {
+  padding-left: 5px;
+}
+
+.navListItemDropItem {
+  text-align: left;
+  height: 40px;
+  align-content: center;
+  border-radius: 0px;
+}
+
+.navListItemDropItem:first-child {
+  border-top-right-radius: 10px;
+}
+
+.navListItemDropItem:last-child {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.navListItem#codeLink {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.navListItemDropItem:hover {
+  background-color: rgba(228, 171, 138, 0.15);
+}

@@ -1,0 +1,30 @@
+footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  background-color: rgba(71, 69, 69, 0.385);
+  font-family: "Fredoka";
+  color: white;
+  padding: 1% 1%;
+  height: fit-content;
+}
+
+.contactLinkContainer {
+  display: flex;
+  flex: row;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.contactLink img {
+  display: block;
+  width: 40px;
+  height: 40px;
+}
+.header {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  text-align: center;
+  font-size: 40px;
+}
