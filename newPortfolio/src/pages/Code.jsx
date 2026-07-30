@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "../index.css";
 
 import puppyImg from "../assets/images/puppy.png";
@@ -14,7 +14,7 @@ const projects = [
     title: "TIC-TAC-TOE",
     image: puppyImg,
     alt: "Puppy",
-    href: "/projects/tictactoe/pages/playerPage.html",
+    href: "/projects/Tic-Tac-Toe/pages/playerPage.html",
   },
   {
     id: "todolist",
@@ -35,14 +35,14 @@ const projects = [
     title: "WORDLE",
     image: cowImg,
     alt: "Cute cow",
-    href: "/projects/wordle/index.html",
+    href: "/projects/Wordle/index.html",
   },
   {
     id: "flashcards",
     title: "FLASHCARDS",
     image: foxImg,
     alt: "Cute fox",
-    href: "../projects/Flashcards/Flashcards/index.html",
+    href: "/projects/Flashcards/Flashcards/index.html",
   },
   {
     id: "flappybird",
@@ -55,8 +55,9 @@ const projects = [
 
 const Code = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [dragStart, setDragStart] = useState(null);
-  const [isDragging, setIsDragging] = useState(false);
+  const [isDragging, setIsDragging] = useState(false); // used only for the CSS class
+
+  const dragStartX = useRef(null);
 
   const previousProject = () => {
     setCurrentIndex((current) =>
@@ -110,42 +111,59 @@ const Code = () => {
   };
 
   const handlePointerDown = (event) => {
-    setDragStart(event.clientX);
+    dragStartX.current = event.clientX;
     setIsDragging(true);
-
-    event.currentTarget.setPointerCapture(event.pointerId);
   };
 
+  // All click/drag decision-making happens here instead of relying on
+  // the browser's synthetic "click" event, which was being suppressed.
   const handlePointerUp = (event) => {
-    if (dragStart === null) {
+    setIsDragging(false);
+
+    if (dragStartX.current === null) {
       return;
     }
 
-    const dragDistance = event.clientX - dragStart;
+    const dragDistance = event.clientX - dragStartX.current;
+    dragStartX.current = null;
 
+    // Real drag/swipe: change the carousel, don't navigate.
     if (dragDistance > 60) {
       previousProject();
-    } else if (dragDistance < -60) {
-      nextProject();
+      return;
     }
 
-    setDragStart(null);
-    setIsDragging(false);
+    if (dragDistance < -60) {
+      nextProject();
+      return;
+    }
+
+    // Not a drag -> treat as a click/tap on whatever project element it was.
+    const projectEl = event.target.closest(".project");
+    if (!projectEl) {
+      return;
+    }
+
+    const clickedIndex = projects.findIndex((p) => p.id === projectEl.id);
+    if (clickedIndex === -1) {
+      return;
+    }
+
+    if (clickedIndex !== currentIndex) {
+      // Side card tapped: bring it to center, don't navigate yet.
+      setCurrentIndex(clickedIndex);
+      return;
+    }
+
+    const href = projects[clickedIndex].href;
+    if (href) {
+      window.location.href = href;
+    }
   };
 
   const handlePointerCancel = () => {
-    setDragStart(null);
+    dragStartX.current = null;
     setIsDragging(false);
-  };
-
-  const handleProjectClick = (event, index, href) => {
-    if (index !== currentIndex || !href || isDragging) {
-      event.preventDefault();
-
-      if (index !== currentIndex) {
-        setCurrentIndex(index);
-      }
-    }
   };
 
   return (
@@ -169,9 +187,7 @@ const Code = () => {
                 id={project.id}
                 href={project.href ?? "#"}
                 style={getProjectStyle(index)}
-                onClick={(event) =>
-                  handleProjectClick(event, index, project.href)
-                }
+                onClick={(event) => event.preventDefault()}
                 aria-label={
                   project.href
                     ? `Open ${project.title}`
