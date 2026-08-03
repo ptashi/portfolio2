@@ -58,20 +58,7 @@ const projects = [
     alt: "Cute cow",
     href: "/projects/Wordle/index.html",
   },
-  {
-    id: "flashcards",
-    title: "FLASHCARDS",
-    image: foxImg,
-    alt: "Cute fox",
-    href: "/projects/Flashcards/Flashcards/index.html",
-  },
-  {
-    id: "flappybird",
-    title: "FLAPPY BIRD",
-    image: flappybirdImg,
-    alt: "Flappy Bird",
-    href: null,
-  },
+
 ];
 
 const Home = () => {
@@ -92,7 +79,7 @@ const Home = () => {
     );
 
     const animatedElements = document.querySelectorAll(
-      "#homepgHeader, #infoParagraph, #backgroundContainer, .language, .course, .timelineItem"
+      "#homepgHeader, #infoParagraph, #backgroundContainer, .language, .course, .timelineItem, #downArrow"
     );
 
     animatedElements.forEach((element) => {
@@ -105,117 +92,52 @@ const Home = () => {
   }, []);
 
   // interactables section
-  const [currentIndex, setCurrentIndex] = useState(0);
-    const [isDragging, setIsDragging] = useState(false); // used only for the CSS class
-  
-    const dragStartX = useRef(null);
-  
-    const previousProject = () => {
-      setCurrentIndex((current) =>
-        current === 0 ? projects.length - 1 : current - 1,
-      );
+  const [currIndex, setCurrIndex] = useState(0);
+
+  const getPrevProject = () => {
+  setCurrIndex((current) =>
+    current === 0 ? projects.length - 1 : current - 1
+  );
+};
+
+  const getNextProject = () => {
+  setCurrIndex((current) =>
+    current === projects.length - 1 ? 0 : current + 1
+  );
+};
+
+  const getCurrPosition = (index) => {
+    let position = index - currIndex;
+    const halfPoint = projects.length / 2;
+
+    if (position > halfPoint) {
+      position -= projects.length;
+    }
+
+    if (position < -halfPoint) {
+      position += projects.length
+    }
+
+    return position;
+  }
+  const getProjectStyle = (index) => {
+    const position = getCurrPosition(index);
+    const absolutePosition = Math.abs(position);
+
+    const translateX = position * 290;
+    const scale = Math.max(1 - absolutePosition * 0.17, 0.65);
+    const opacity = Math.max(1 - absolutePosition * 0.28, 0);
+    const blur = absolutePosition === 0 ? 0 : absolutePosition * 1.5;
+
+    return {
+      left: "50%",
+      top: "50%",
+      transform: `translate(-50%, -50%) translateX(${translateX}px) scale(${scale})`,
+      opacity,
+      filter: `blur(${blur}px)`,
+      zIndex: projects.length - absolutePosition,
     };
-  
-    const nextProject = () => {
-      setCurrentIndex((current) =>
-        current === projects.length - 1 ? 0 : current + 1,
-      );
-    };
-  
-    const getProjectPosition = (index) => {
-      let position = index - currentIndex;
-  
-      const halfwayPoint = projects.length / 2;
-  
-      if (position > halfwayPoint) {
-        position -= projects.length;
-      }
-  
-      if (position < -halfwayPoint) {
-        position += projects.length;
-      }
-  
-      return position;
-    };
-  
-    const getProjectStyle = (index) => {
-      const position = getProjectPosition(index);
-      const absolutePosition = Math.abs(position);
-  
-      const translateX = position * 290;
-      const scale = Math.max(1 - absolutePosition * 0.17, 0.65);
-      const opacity = Math.max(1 - absolutePosition * 0.28, 0);
-      const blur = absolutePosition === 0 ? 0 : absolutePosition * 1.5;
-  
-      return {
-        left: "50%",
-        top: "50%",
-        transform: `
-          translate(-50%, -50%)
-          translateX(${translateX}px)
-          scale(${scale})
-        `,
-        opacity,
-        filter: `blur(${blur}px)`,
-        zIndex: projects.length - absolutePosition,
-      };
-    };
-  
-    const handlePointerDown = (event) => {
-      dragStartX.current = event.clientX;
-      setIsDragging(true);
-    };
-  
-    // All click/drag decision-making happens here instead of relying on
-    // the browser's synthetic "click" event, which was being suppressed.
-    const handlePointerUp = (event) => {
-      setIsDragging(false);
-  
-      if (dragStartX.current === null) {
-        return;
-      }
-  
-      const dragDistance = event.clientX - dragStartX.current;
-      dragStartX.current = null;
-  
-      // Real drag/swipe: change the carousel, don't navigate.
-      if (dragDistance > 60) {
-        previousProject();
-        return;
-      }
-  
-      if (dragDistance < -60) {
-        nextProject();
-        return;
-      }
-  
-      // Not a drag -> treat as a click/tap on whatever project element it was.
-      const projectEl = event.target.closest(".project");
-      if (!projectEl) {
-        return;
-      }
-  
-      const clickedIndex = projects.findIndex((p) => p.id === projectEl.id);
-      if (clickedIndex === -1) {
-        return;
-      }
-  
-      if (clickedIndex !== currentIndex) {
-        // Side card tapped: bring it to center, don't navigate yet.
-        setCurrentIndex(clickedIndex);
-        return;
-      }
-  
-      const href = projects[clickedIndex].href;
-      if (href) {
-        window.location.href = href;
-      }
-    };
-  
-    const handlePointerCancel = () => {
-      dragStartX.current = null;
-      setIsDragging(false);
-    };
+  };
   
   return (
     <>
@@ -224,37 +146,40 @@ const Home = () => {
         id="portfolio"
         style={{ backgroundImage: `url(${homepageBg})` }}
       >
-        <div id="homepgContainer">
-          <div id="homepgHeader">
-            <div className="homepgHeaderLine" id="lineTop" />
+      
+          <div id="homepgContainer">
+            <div id="homepgHeader">
+              <div className="homepgHeaderLine" id="lineTop" />
 
-            <div id="homepgHeaderText">
-              ASPIRING
-              <br />
-              DEVELOPER
+              <div id="homepgHeaderText">
+                ASPIRING
+                <br />
+                DEVELOPER
+              </div>
+
+              <div className="homepgHeaderLine" id="lineBottom" />
             </div>
-
-            <div className="homepgHeaderLine" id="lineBottom" />
           </div>
-        </div>
 
-        <div id="spacer" />
+          <div id="spacer" />
 
-        <div id="infoParagraphContainer">
-          <div id="infoParagraphHeader">
-            <div id="infoParagraphLine" />
+          <div id="infoParagraphContainer">
+            <div id="infoParagraphHeader">
+              <div id="infoParagraphLine" />
 
-            <div id="infoParagraphMask">
-              <div id="infoParagraph">
-                My name is Pema Tashi, and I am a Computer Science major at the
-                University of Connecticut, with a concentration in Software
-                Design &amp; Development.
-                <br />
-                <br />
-                Keep scrolling to learn more!
+              <div id="infoParagraphMask">
+                <div id="infoParagraph">
+                  My name is Pema Tashi, and I am a Computer Science major at the
+                  University of Connecticut, with a concentration in Software
+                  Design &amp; Development.
+                
+                </div>
               </div>
             </div>
           </div>
+
+        <div id="downArrow" className="animate">
+          ↓
         </div>
       </section>
 
@@ -269,18 +194,16 @@ const Home = () => {
           University of Connecticut.
           <br />
           <br />
-          I recently completed my Digital Technology internship at Synchrony,
-          where I continued developing my technical and professional skills.
+          I am currently an intern at Synchrony in the Digital Technology Center,
+          where I work on the Generative AI Developer Team.
           <br />
           <br />
           Outside of my academic work, I founded an online clothing business
           called Yangkar Bhoeche, focused on traditional × modern Tibetan
           clothing and accessories.
-          <br />
-          <br />
-          Outside of tech, I enjoy acting and teaching! Keep scrolling to take a
-          peek into my life!
+          
         </div>
+
       </section>
 
       {/* Qualifications */}
@@ -331,47 +254,41 @@ const Home = () => {
         </div>
       </section>
       <div id="codeMain">
-        <section className="projectCarousel">
+        <section id="projectCarousel" className="projectCarousel">
           <div className="codeSection">INTERACTABLES</div>
 
-          <div
-            className={`projectStage ${isDragging ? "dragging" : ""}`}
-            onPointerDown={handlePointerDown}
-            onPointerUp={handlePointerUp}
-            onPointerCancel={handlePointerCancel}
-          >
+          <div className="projectStage">
             {projects.map((project, index) => (
               <a
                 key={project.id}
-                className={`project ${
-                  index === currentIndex ? "active" : ""
-                }`}
+                className={`project ${index === currIndex ? "active" : ""}`}
                 id={project.id}
                 href={project.href ?? "#"}
                 style={getProjectStyle(index)}
-                onClick={(event) => event.preventDefault()}
+                onClick={(event) => {
+                  if (index !== currIndex) {
+                    event.preventDefault();
+                    setCurrIndex(index);
+                  }
+                }}
                 aria-label={
                   project.href
                     ? `Open ${project.title}`
                     : `${project.title} coming soon`
                 }
-              >
-                <img
-                  src={project.image}
-                  alt={project.alt}
-                  draggable="false"
-                />
-
+                >
+                <img src={project.image} alt={project.alt} draggable="false" />
                 <div className="projectTitle">{project.title}</div>
               </a>
-            ))}
+             ))
+            }
           </div>
 
           <div className="carouselControls">
             <button
               className="carouselArrow"
               type="button"
-              onClick={previousProject}
+              onClick={getPrevProject}
               aria-label="Previous project"
             >
               &#8592;
@@ -381,11 +298,9 @@ const Home = () => {
               {projects.map((project, index) => (
                 <button
                   key={project.id}
-                  className={`carouselDot ${
-                    index === currentIndex ? "active" : ""
-                  }`}
+                  className={`carouselDot ${index === currIndex ? "active" : ""}`}
                   type="button"
-                  onClick={() => setCurrentIndex(index)}
+                  onClick={() => setCurrIndex(index)}
                   aria-label={`Show ${project.title}`}
                 />
               ))}
@@ -394,7 +309,7 @@ const Home = () => {
             <button
               className="carouselArrow"
               type="button"
-              onClick={nextProject}
+              onClick={getNextProject}
               aria-label="Next project"
             >
               &#8594;
@@ -454,6 +369,7 @@ const Home = () => {
         </section>
       </div>
 
+      <div className="title">Little more about my life...</div>
       <hr style={{ color: "rgb(134, 132, 132)" }} />
 
       {/* Yangkar Bhoeche */}
@@ -490,11 +406,7 @@ const Home = () => {
           </div>
         </div>
 
-        
-          href="https://yangkarbhoeche.com/products"
-          target="_blank"
-          rel="noopener noreferrer"
-        <a>
+        <a href="https://yangkarbhoeche.com/products" target="_blank" rel="noopener noreferrer">
           <img
             className="aboutMeInfoImage"
             src={yangkarImg}

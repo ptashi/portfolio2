@@ -14,7 +14,7 @@ export const Navbar = () => {
       </div>
 
       <div className="navListContainer">
-        <div id="codeLink" className="navListItem">
+          {/* <div id="codeLink" className="navListItem">
           <Link to="/code">Code</Link>
 
           <div className="navListItemDrop">
@@ -32,7 +32,7 @@ export const Navbar = () => {
               </Link>
             </div>
           </div>
-        </div>
+        </div> */}
 
 
         <div className="navListItem">
