@@ -31,25 +31,25 @@ const ProjectCard = ({ title, description, titlePosition = "top", videoSrc }) =>
   return (
     <article className="bigProject">
       {titlePosition === "top" && (
-        <div className="bigProjectBox">
-          {videoSrc ? (
-            <video
-              ref={videoRef}
-              src={videoSrc}
-              muted
-              loop
-              playsInline
-              style={{
-                width: "100%",
-                height: "100%",
-                borderRadius: "20px",
-                objectFit: "cover",
-              }}
-            />
-          ) : (
-            title
-          )}
-        </div>
+        videoSrc ? (
+          <video
+            ref={videoRef}
+            src={videoSrc}
+            muted
+            loop
+            playsInline
+            style={{
+              width: "min(550px, 50%)",
+              height: "360px",
+              boxSizing: "border-box",
+              borderRadius: "20px",
+              objectFit: "cover",
+              boxShadow: "0 20px 45px rgba(0, 0, 0, 0.25)",
+            }}
+          />
+        ) : (
+          <div className="bigProjectBox">{title}</div>
+        )
       )}
 
       <div className="bigProjectInfo">
@@ -57,25 +57,25 @@ const ProjectCard = ({ title, description, titlePosition = "top", videoSrc }) =>
       </div>
 
       {titlePosition === "bottom" && (
-        <div className="bigProjectBox">
-          {videoSrc ? (
-            <video
-              ref={videoRef}
-              src={videoSrc}
-              muted
-              loop
-              playsInline
-              style={{
-                width: "100%",
-                height: "100%",
-                borderRadius: "20px",
-                objectFit: "cover",
-              }}
-            />
-          ) : (
-            title
-          )}
-        </div>
+        videoSrc ? (
+          <video
+            ref={videoRef}
+            src={videoSrc}
+            muted
+            loop
+            playsInline
+            style={{
+              width: "min(550px, 50%)",
+              height: "360px",
+              boxSizing: "border-box",
+              borderRadius: "20px",
+              objectFit: "cover",
+              boxShadow: "0 20px 45px rgba(0, 0, 0, 0.25)",
+            }}
+          />
+        ) : (
+          <div className="bigProjectBox">{title}</div>
+        )
       )}
     </article>
   );
