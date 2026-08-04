@@ -1,0 +1,54 @@
+name: Deploy to Cloud Panel via SSH
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: newPortfolio/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./newPortfolio
+
+      - name: Build app
+        run: npm run build
+        working-directory: ./newPortfolio
+
+      - name: Create target directory on server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script_stop: true
+          timeout: 120s
+          command_timeout: 10m
+          debug: true
+          script: |
+            mkdir -p ../htdocs/pematashi.com
+
+      - name: Deploy built files
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          source: "newPortfolio/dist/*"
+          target: "../htdocs/pematashi.com/"
+          rm: true
