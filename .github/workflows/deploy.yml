@@ -25,11 +25,7 @@ jobs:
         run: npm ci
         working-directory: ./newPortfolio
 
-      - name: Build app
-        run: npm run build
-        working-directory: ./newPortfolio
-
-      - name: Create target directory on server
+      - name: Deploy to server
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -41,15 +37,19 @@ jobs:
           command_timeout: 10m
           debug: true
           script: |
-            mkdir -p ../htdocs/pematashi.com
+            set -e
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-      - name: Deploy built files
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          port: ${{ secrets.SSH_PORT || 22 }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          source: "newPortfolio/dist/*"
-          target: "../htdocs/pematashi.com/"
-          rm: true
+            cd /home/pematashi/htdocs/pematashi.com
+
+            # Fetch and pull latest code from main branch
+            git fetch origin main
+            git checkout main
+            git reset --hard origin/main
+
+            # Install dependencies
+            npm ci
+
+            # Build the app
+            npm run build
