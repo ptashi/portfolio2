@@ -782,6 +782,16 @@ html {
   line-height: 1.8;
 }
 
+/* -------------------------------- PROJECT CARD VIDEO -------------------------------- */
+.projectVideo {
+  width: min(550px, 50%);
+  height: 360px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  object-fit: cover;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+}
+
 /* -------------------------------- RESPONSIVE -------------------------------- */
 
 @media (max-width: 900px) {
@@ -824,6 +834,11 @@ html {
   .bigProjectInfo {
     max-width: 100%;
   }
+
+  .projectVideo {
+    width: 100%;
+    height: 280px;
+  }
 }
 
 @media (max-width: 550px) {
@@ -860,6 +875,11 @@ html {
 
   .bigProjectInfo {
     font-size: 15px;
+  }
+
+  .projectVideo {
+    width: 100%;
+    height: 220px;
   }
 }
 #contactPage {

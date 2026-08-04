@@ -38,14 +38,7 @@ const ProjectCard = ({ title, description, titlePosition = "top", videoSrc }) =>
             muted
             loop
             playsInline
-            style={{
-              width: "min(550px, 50%)",
-              height: "360px",
-              boxSizing: "border-box",
-              borderRadius: "20px",
-              objectFit: "cover",
-              boxShadow: "0 20px 45px rgba(0, 0, 0, 0.25)",
-            }}
+            className="projectVideo"
           />
         ) : (
           <div className="bigProjectBox">{title}</div>
@@ -64,14 +57,7 @@ const ProjectCard = ({ title, description, titlePosition = "top", videoSrc }) =>
             muted
             loop
             playsInline
-            style={{
-              width: "min(550px, 50%)",
-              height: "360px",
-              boxSizing: "border-box",
-              borderRadius: "20px",
-              objectFit: "cover",
-              boxShadow: "0 20px 45px rgba(0, 0, 0, 0.25)",
-            }}
+            className="projectVideo"
           />
         ) : (
           <div className="bigProjectBox">{title}</div>
