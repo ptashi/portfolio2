@@ -28,8 +28,8 @@ const Contact = () => {
               <div className="contactRow">
                 <div className="contactIcon">✆</div>
                 <div>
-                  <div className="contactLabel">Phone</div>
-                  <div className="contactValue">(860) 574-4087</div>
+                  <div className="contactLabel">Expected Grad. Date</div>
+                  <div className="contactValue">May 2028</div>
                 </div>
               </div>
 
