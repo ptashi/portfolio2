@@ -38,3 +38,8 @@ jobs:
 
             # Build the app
             npm --prefix newPortfolio run build
+
+            # Start or restart the server with PM2
+            cd newPortfolio
+            export PORT=3276
+            pm2 restart portfolio --update-env || pm2 start "npx serve -s dist" --name portfolio
