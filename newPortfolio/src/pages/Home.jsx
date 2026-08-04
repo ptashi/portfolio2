@@ -68,70 +68,69 @@ const bigProjects = [
     videoSrc: "/videos/venivici.mp4",
     description: (
       <>
-        A dynamic project description goes here.
+        An interactive mythology discovery game where you explore elements from ancient mythology, from creatures to gods and their relationships.
         <br />
         <br />
-        This is a placeholder description for VeniVici. Add more details about what this project does.
+        Each discovery reveals attributes like category, parentage, and description, with a "Ban an Attribute" feature and a history log to track what you've found.
         <br />
         <br />
-        Goal: [Add project goal here]
+        Goal: Make exploring ancient mythology fun and engaging through discovery-based gameplay.
       </>
     ),
     titlePosition: "top",
-  },
-  {
-    id: "medifind",
-    title: "MediFind",
-    videoSrc: "/videos/medfind.mp4",
-    description: (
-      <>
-        This is a a hub where you can find any type of medicine and get detailed data on it.
-        <br />
-        <br />
-        It accepts text from the user and provides a high-level overview, or a detailed summary on the drug.
-        It uses an open-source FDA API as a data source.
-        <br />
-        <br />
-        Goal: Help users find quick information on a specified medication.
-      </>
-    ),
-    titlePosition: "bottom",
-  },
-  {
-    id: "flashcards",
-    title: "Flashcards",
-    videoSrc: "/videos/flashcards.mp4",
-    description: (
-      <>
-        An interactive flashcard application for studying and memorization.
-        <br />
-        <br />
-        Create custom flashcard decks, study with spaced repetition, and track your progress.
-        <br />
-        <br />
-        Goal: Help users learn effectively through interactive flashcards.
-      </>
-    ),
-    titlePosition: "top",
-  },
-  {
-    id: "recipecorner",
-    title: "Recipe Corner",
-    videoSrc: "/videos/recipecorner.mp4",
-    description: (
-      <>
-        A place where you can find fun recipes--both sweet and savory.
-        <br />
-        <br />
-        It,....
-        <br />
-        <br />
-        Goal: Help users find  a delicious food to make, and gives the user quick info as well as a link to a recipe.
-      </>
-    ),
-    titlePosition: "bottom",
-  },
-];
+    },
+    {
+      id: "medifind",
+      title: "MediFind",
+      videoSrc: "/videos/medfind.mp4",
+      description: (
+        <>
+          A hub where you can search any type of medicine and get detailed data on it, powered by an open-source FDA API.
+          <br />
+          <br />
+          It includes visual breakdowns of medicine data — like product types and routes of administration — alongside detailed cards for each medication showing route, brand name, purpose, and product type.
+          <br />
+          <br />
+          Goal: Help users quickly find clear, reliable information on a specified medication.
+        </>
+      ),
+      titlePosition: "bottom",
+    },
+    {
+      id: "flashcards",
+      title: "Flashcards",
+      videoSrc: "/videos/flashcards.mp4",
+      description: (
+        <>
+          A flashcard study tool built around unique words with beautiful meanings, designed to make vocabulary learning more engaging.
+          <br />
+          <br />
+          It includes both a Study Mode for reviewing cards at your own pace and a Quiz Mode to test recall, with shuffle and navigation controls built in.
+          <br />
+          <br />
+          Goal: Help users learn and retain new vocabulary through an interactive study and quiz experience.
+        </>
+      ),
+      titlePosition: "top",
+    },
+    {
+      id: "recipecorner",
+      title: "Recipe Corner",
+      videoSrc: "/videos/recipecorner.mp4",
+      description: (
+        <>
+          A place where you can browse fun, delicious recipes across categories like dessert, dinner, and more.
+          <br />
+          <br />
+          Each recipe card shows prep time, difficulty, ingredient count, and category at a glance, with filtering by category, difficulty, and prep time to help you quickly find something to make.
+          <br />
+          <br />
+          Goal: Help users discover a recipe that fits their time and skill level, with quick info and a direct link to the full recipe.
+        </>
+      ),
+      titlePosition: "bottom",
+    },
+  ];
 
 const upcomingProjects = [
   {
