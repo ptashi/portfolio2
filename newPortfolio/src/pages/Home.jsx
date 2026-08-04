@@ -266,8 +266,10 @@ const Home = () => {
                 href={project.href ?? "#"}
                 style={getProjectStyle(index)}
                 onClick={(event) => {
-                  if (index !== currIndex) {
-                    event.preventDefault();
+                  event.preventDefault();
+                  if (index === currIndex && project.href) {
+                    window.location.href = project.href;
+                  } else {
                     setCurrIndex(index);
                   }
                 }}
