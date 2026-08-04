@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { useEffect } from "react";
 import "../index.css";
-
+import ProjectCard from "../components/ProjectCard";
 
 import homepageBg from "../assets/images/homepagebg.jpg";
 import headshotImg from "../assets/images/aboutmepage/headshotnew.jpg";
@@ -59,6 +59,87 @@ const projects = [
     href: "/projects/Wordle/index.html",
   },
 
+];
+
+const bigProjects = [
+  {
+    id: "venivici",
+    title: "VeniVici",
+    videoSrc: "/videos/venivici.mp4",
+    description: (
+      <>
+        A dynamic project description goes here.
+        <br />
+        <br />
+        This is a placeholder description for VeniVici. Add more details about what this project does.
+        <br />
+        <br />
+        Goal: [Add project goal here]
+      </>
+    ),
+    titlePosition: "top",
+  },
+  {
+    id: "medifind",
+    title: "MediFind",
+    videoSrc: "/videos/medfind.mp4",
+    description: (
+      <>
+        This is a a hub where you can find any type of medicine and get detailed data on it.
+        <br />
+        <br />
+        It accepts text from the user and provides a high-level overview, or a detailed summary on the drug.
+        It uses an open-source FDA API as a data source.
+        <br />
+        <br />
+        Goal: Help users find quick information on a specified medication.
+      </>
+    ),
+    titlePosition: "bottom",
+  },
+  {
+    id: "flashcards",
+    title: "Flashcards",
+    videoSrc: "/videos/flashcards.mp4",
+    description: (
+      <>
+        An interactive flashcard application for studying and memorization.
+        <br />
+        <br />
+        Create custom flashcard decks, study with spaced repetition, and track your progress.
+        <br />
+        <br />
+        Goal: Help users learn effectively through interactive flashcards.
+      </>
+    ),
+    titlePosition: "top",
+  },
+  {
+    id: "recipecorner",
+    title: "Recipe Corner",
+    videoSrc: "/videos/recipecorner.mp4",
+    description: (
+      <>
+        A place where you can find fun recipes--both sweet and savory.
+        <br />
+        <br />
+        It,....
+        <br />
+        <br />
+        Goal: Help users find  a delicious food to make, and gives the user quick info as well as a link to a recipe.
+      </>
+    ),
+    titlePosition: "bottom",
+  },
+];
+
+const upcomingProjects = [
+  {
+    id: "robloxgame",
+    title: "Roblox Game",
+    description: "A game that incorporates what kids love—brain rot and obbies.",
+    titlePosition: "top",
+  },
 ];
 
 const Home = () => {
@@ -323,51 +404,30 @@ const Home = () => {
           <div className="codeSection">PROJECTS</div>
 
           <div id="bigProjectContainer">
-            <article className="bigProject">
-              <div className="bigProjectBox">TerraTech</div>
-
-              <div className="bigProjectInfo">
-                This is an MVP Recycling Assistance Project created for the
-                2026 UConn Hackathon.
-                <br />
-                <br />
-                It uses a YOLO object-detection model to analyze real-time
-                images and provide feedback through a Tkinter interface.
-                <br />
-                <br />
-                Goal: Provide helpful recycling information and let users know
-                whether an item is recyclable.
-              </div>
-            </article>
-
-            <article className="bigProject">
-              <div className="bigProjectInfo">
-                This is an AI-powered text study guide tool.
-                <br />
-                <br />
-                It accepts text from the user and provides either a summary or
-                quiz questions based on the entered text.
-                <br />
-                <br />
-                Goal: Help users quickly understand long passages and reinforce
-                what they learned.
-              </div>
-
-              <div className="bigProjectBox">Text Summarizer</div>
-            </article>
+            {bigProjects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                title={project.title}
+                description={project.description}
+                titlePosition={project.titlePosition}
+                videoSrc={project.videoSrc}
+              />
+            ))}
           </div>
         </section>
 
         <section id="upcomingProjectSection">
           <div className="codeSection">COMING SOON...</div>
 
-          <article className="bigProject">
-            <div className="bigProjectBox">Roblox Game</div>
-
-            <div className="bigProjectInfo">
-              A game that incorporates what kids love—brain rot and obbies.
-            </div>
-          </article>
+          {upcomingProjects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              title={project.title}
+              description={project.description}
+              titlePosition={project.titlePosition}
+              videoSrc={project.videoSrc}
+            />
+          ))}
         </section>
       </div>
 
