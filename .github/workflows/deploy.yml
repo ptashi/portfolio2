@@ -34,7 +34,7 @@ jobs:
             git reset --hard origin/main
 
             # Install dependencies
-            npm ci
+            npm --prefix newPortfolio ci
 
             # Build the app
-            npm run build
+            npm --prefix newPortfolio run build
