@@ -30,29 +30,53 @@ const ProjectCard = ({ title, description, titlePosition = "top", videoSrc }) =>
 
   return (
     <article className="bigProject">
-      {titlePosition === "top" && <div className="bigProjectBox">{title}</div>}
+      {titlePosition === "top" && (
+        <div className="bigProjectBox">
+          {videoSrc ? (
+            <video
+              ref={videoRef}
+              src={videoSrc}
+              muted
+              loop
+              playsInline
+              style={{
+                width: "100%",
+                height: "100%",
+                borderRadius: "20px",
+                objectFit: "cover",
+              }}
+            />
+          ) : (
+            title
+          )}
+        </div>
+      )}
 
       <div className="bigProjectInfo">
-        {videoSrc && (
-          <video
-            ref={videoRef}
-            src={videoSrc}
-            muted
-            loop
-            playsInline
-            style={{
-              width: "100%",
-              borderRadius: "20px",
-              boxShadow: "0 20px 45px rgba(0, 0, 0, 0.25)",
-              marginBottom: "16px",
-              display: "block",
-            }}
-          />
-        )}
         {description}
       </div>
 
-      {titlePosition === "bottom" && <div className="bigProjectBox">{title}</div>}
+      {titlePosition === "bottom" && (
+        <div className="bigProjectBox">
+          {videoSrc ? (
+            <video
+              ref={videoRef}
+              src={videoSrc}
+              muted
+              loop
+              playsInline
+              style={{
+                width: "100%",
+                height: "100%",
+                borderRadius: "20px",
+                objectFit: "cover",
+              }}
+            />
+          ) : (
+            title
+          )}
+        </div>
+      )}
     </article>
   );
 };
